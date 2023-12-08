@@ -14,12 +14,14 @@ app.get('/',(req,res)=>{
     res.sendFile('./public/index.html');
 })
 
-var cnsp = io.of('/custom-namespace');
+var roomno =1;
 
-cnsp.on('connection',(socket)=>{
+io.on('connection',(socket)=>{
     console.log(socket.id,' socket connected');
    
-    cnsp.emit('customEvent','Test Event Call');
+  socket.join("room-"+roomno);
+
+  io.sockets.in("room-"+roomno).emit('connectedRoom',"You are connected to room no. "+roomno);
 
     socket.on('disconnect',()=>{
         console.log('socket disconnected');

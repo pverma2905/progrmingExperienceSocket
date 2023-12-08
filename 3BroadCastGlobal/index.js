@@ -14,16 +14,18 @@ app.get('/',(req,res)=>{
     res.sendFile('./public/index.html');
 })
 
+var users = 0;
+
 io.on('connection',(socket)=>{
     console.log(socket.id,' socket connected');
-   
-    socket.on('customEvent', function(data){
-        console.log(data);
-    })
+    users++;
+    io.sockets.emit('broadcast',{message: users+ ' users connected!'});
 
     socket.on('disconnect',()=>{
         console.log('socket disconnected');
-       
+        users--;
+        io.sockets.emit('broadcast',{message: users+ ' users connected!'});
+
     })
 })
 

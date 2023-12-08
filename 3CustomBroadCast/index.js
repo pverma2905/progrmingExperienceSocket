@@ -14,16 +14,19 @@ app.get('/',(req,res)=>{
     res.sendFile('./public/index.html');
 })
 
-var cnsp = io.of('/custom-namespace');
+var users = 0;
 
-cnsp.on('connection',(socket)=>{
+io.on('connection',(socket)=>{
     console.log(socket.id,' socket connected');
-   
-    cnsp.emit('customEvent','Test Event Call');
+    users++;
+    socket.emit('newuserconnect',{message: 'Hii, Welcome Dear'});
+    socket.broadcast.emit('newuserconnect',{message: users+ ' users connected!'});
 
     socket.on('disconnect',()=>{
         console.log('socket disconnected');
-       
+        users--;
+        socket.broadcast.emit('newuserconnect',{message: users+ ' users connected!'});
+
     })
 })
 

@@ -14,16 +14,13 @@ app.get('/',(req,res)=>{
     res.sendFile('./public/index.html');
 })
 
-var cnsp = io.of('/custom-namespace');
 
-cnsp.on('connection',(socket)=>{
+
+io.on('connection',(socket)=>{
     console.log(socket.id,' socket connected');
-   
-    cnsp.emit('customEvent','Test Event Call');
-
+    
     socket.on('disconnect',()=>{
         console.log('socket disconnected');
-       
     })
 })
 

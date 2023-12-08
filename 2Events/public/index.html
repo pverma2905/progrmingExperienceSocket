@@ -9,11 +9,8 @@
 <body>
         <h1>Chatting</h1>
         <script>
-            var socket = io('/custom-namespace');
-            socket.on('customEvent', function(data){
-                document.body.innerHTML='';
-                document.write(data)
-            })
+            var socket = io();
+            socket.emit('customEvent', 'A custom message from client side')
         </script>  
 </body>
 </html>

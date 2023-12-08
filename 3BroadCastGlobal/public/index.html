@@ -10,7 +10,7 @@
         <h1>Chatting</h1>
         <script>
             var socket = io('/custom-namespace');
-            socket.on('customEvent', function(data){
+            socket.on('broadcast', function(data){
                 document.body.innerHTML='';
                 document.write(data)
             })
